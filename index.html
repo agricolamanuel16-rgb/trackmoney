@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>TrackMoney</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#10b981">
+
+  <link rel="icon" type="image/png" href="img/IMG_0982.jpeg">
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+</head>
+
+<body>
+  <!-- ===== LOGIN / REGISTRAZIONE ===== -->
+  <section id="auth-section" class="auth-section active">
+    <div class="auth-container">
+      <h2>Benvenuto in TrackMoney</h2>
+      <p>Accedi o registrati per continuare</p>
+
+      <form id="authForm">
+        <div class="form-row">
+          <label for="authEmail">Email</label>
+          <input type="email" id="authEmail" required placeholder="esempio@email.com" />
+        </div>
+        <div class="form-row">
+          <label for="authPassword">Password</label>
+          <input type="password" id="authPassword" required minlength="4" placeholder="Minimo 4 caratteri" />
+        </div>
+        <button type="submit" class="btn-submit" id="authSubmit">Accedi</button>
+      </form>
+
+      <p id="toggleAuthMode">
+        Non hai un account? <a href="#" id="switchToRegister">Registrati</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== APP PRINCIPALE ===== -->
+  <section id="app-section" class="hidden">
+    <header>
+      <div class="logo">
+        <div class="logo-icon">€</div>
+        <div class="logo-text">TrackMoney</div>
+      </div>
+      <div class="user-info">
+        Ciao, <span id="userEmail">utente@example.com</span>
+        <button id="logoutBtn" class="btn-logout">Esci</button>
+      </div>
+    </header>
+
+    <nav>
+      <button class="tab-btn active" data-tab="overview">Panoramica</button>
+      <button class="tab-btn" data-tab="add">Aggiungi Guadagno</button>
+      <button class="tab-btn" data-tab="charts">Grafici</button>
+    </nav>
+
+    <main>
+      <!-- Panoramica -->
+      <section id="overview" class="tab-content active">
+        <div class="stats-cards">
+          <div class="card">
+            <div class="icon" style="background:#d1fae5; color:#047857;">$</div>
+            <div>
+              <div class="card-label">Guadagni Totali</div>
+              <div class="card-value" id="totalEarnings">0,00 €</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="icon" style="background:#dbeafe; color:#1e40af;">📊</div>
+            <div>
+              <div class="card-label">Numero Transazioni</div>
+              <div class="card-value" id="transactionCount">0</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="icon" style="background:#ede9fe; color:#7c3aed;">↗</div>
+            <div>
+              <div class="card-label">Media Guadagno</div>
+              <div class="card-value" id="averageEarnings">0,00 €</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="icon" style="background:#fff7ed; color:#c2410c;">€</div>
+            <div>
+              <div class="card-label">Categorie</div>
+              <div class="card-value" id="categoryCount">0</div>
+            </div>
+          </div>
+        </div>
+        <div class="recent-earnings" id="recentEarnings">
+          <h3>Guadagni Recenti</h3>
+          <div class="sort-controls">
+            <label>Ordina per: </label>
+            <select id="sortSelect">
+              <option value="date_desc">Data ↓</option>
+              <option value="date_asc">Data ↑</option>
+              <option value="amount_desc">Importo ↓</option>
+              <option value="amount_asc">Importo ↑</option>
+              <option value="category_asc">Categoria A-Z</option>
+              <option value="category_desc">Categoria Z-A</option>
+            </select>
+          </div>
+          <div id="recentListContainer"></div>
+        </div>
+      </section>
+
+      <!-- Aggiungi Guadagno -->
+      <section id="add" class="tab-content">
+        <h2>➕ Aggiungi Nuovo Guadagno</h2>
+        <form id="addForm">
+          <div class="form-row">
+            <label for="amount">Importo (€) *</label>
+            <input type="number" id="amount" step="0.01" min="0" required placeholder="0.00" />
+          </div>
+          <div class="form-row">
+            <label for="date">Data</label>
+            <input type="date" id="date" />
+          </div>
+          <div class="form-row">
+            <label for="type">Tipo</label>
+            <select id="type" required>
+              <option value="income" selected>Guadagno</option>
+              <option value="expense">Perdita</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="category">Categoria *</label>
+            <select id="category" required>
+              <option value="" disabled selected>Seleziona categoria</option>
+              <option value="vendite online">Vendite Online</option>
+              <option value="servizi">Servizi</option>
+              <option value="commissioni">Commissioni</option>
+              <option value="prodotti fisici">Prodotti Fisici</option>
+              <option value="altro">Altro</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="description">Descrizione</label>
+            <textarea id="description" placeholder="Dettagli opzionali..."></textarea>
+          </div>
+          <button type="submit" class="btn-submit">➕ Aggiungi Guadagno</button>
+        </form>
+      </section>
+
+      <!-- Grafici -->
+      <section id="charts" class="tab-content">
+        <h2>Andamento</h2>
+        <div class="chart-controls">
+          <label for="chart-period">Visualizza per:</label>
+          <select id="chart-period">
+            <option value="day">Giorno</option>
+            <option value="month" selected>Mensile</option>
+            <option value="year">Annuale</option>
+          </select>
+        </div>
+        <canvas id="earningsChart" height="300"></canvas>
+      </section>
+    </main>
+  </section>
+
+  <div id="editModal" class="edit-modal hidden">
+    <div class="edit-box">
+      <h3>Modifica Guadagno</h3>
+      <label>Importo (€)</label>
+      <input type="number" id="editAmount" step="0.01" />
+      <label>Data</label>
+      <input type="date" id="editDate" />
+      <label>Tipo</label>
+      <select id="editType">
+        <option value="income">Guadagno</option>
+        <option value="expense">Perdita</option>
+      </select>
+      <label>Categoria</label>
+      <input type="text" id="editCategory" />
+      <label>Descrizione</label>
+      <textarea id="editDescription"></textarea>
+      <div class="edit-actions">
+        <button id="saveEdit" class="btn-submit">Salva</button>
+        <button id="cancelEdit" class="delete-btn">Annulla</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottone Dark Mode -->
+  <button id="darkModeToggle" class="dark-toggle" aria-pressed="false" aria-label="Attiva modalità scura" title="Modalità scura">🌙</button>
+
+  <!-- Script principale -->
+  <script src="script.js"></script>
+</body>
+</html>

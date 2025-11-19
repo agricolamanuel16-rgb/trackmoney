@@ -1,0 +1,512 @@
+/* Font & base */
+body {
+  font-family: 'Inter', sans-serif;
+  background: #f9fafb;
+  margin: 0; padding: 0;
+  color: #111827;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: white;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 0.05);
+  font-weight: 600;
+  font-size: 1.1rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: default;
+}
+.logo-icon {
+  background: #00b275;
+  color: white;
+  font-weight: 700;
+  font-size: 1.4rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.btn-logout {
+  border: 1px solid #d1d5db;
+  background: white;
+  color: #374151;
+  border-radius: 6px;
+  font-weight: 600;
+  padding: 0.35rem 0.8rem;
+  cursor: pointer;
+  transition: background 0.25s, border-color 0.25s;
+}
+.btn-logout:hover {
+  background: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+/* Nav Tabs */
+nav {
+  background: white;
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 1rem;
+}
+nav .tab-btn {
+  flex: 1;
+  padding: 0.9rem 0;
+  border: none;
+  background: none;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #6b7280;
+  border-bottom: 3px solid transparent;
+  transition: color 0.3s, border-color 0.3s;
+}
+nav .tab-btn.active {
+  color: #00b275;
+  border-bottom-color: #00b275;
+}
+nav .tab-btn:hover:not(.active) {
+  color: #10b981;
+}
+
+/* Main content */
+main {
+  max-width: 900px;
+  margin: 0 auto 3rem auto;
+  padding: 0 1rem;
+}
+.tab-content {
+  display: none;
+}
+.tab-content.active {
+  display: block;
+}
+
+/* Stat cards in overview */
+.stats-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(160px,1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.card {
+  background: white;
+  padding: 1rem 1.2rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 1px 6px rgb(0 0 0 / 0.05);
+  cursor: default;
+}
+.icon {
+  font-size: 1.7rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 8px;
+  user-select: none;
+}
+.card-label {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin-bottom: 0.25rem;
+}
+.card-value {
+  font-size: 1.3rem;
+  font-weight: 700;
+  user-select: none;
+}
+
+/* Recent earnings */
+.recent-earnings {
+  background: white;
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 1px 6px rgb(0 0 0 / 0.05);
+}
+.recent-earnings h3 {
+  margin-top: 0; margin-bottom: 1rem;
+  font-weight: 600;
+}
+.no-data {
+  color: #9ca3af;
+  font-style: italic;
+  text-align: center;
+  padding: 2rem 0;
+}
+
+/* Add earnings form */
+form {
+  background: white;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 1px 6px rgb(0 0 0 / 0.05);
+  max-width: 480px;
+  margin: 0 auto;
+}
+form h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+.form-row {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+label {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+input[type="number"],
+input[type="date"],
+select,
+textarea {
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  color: #111827;
+  outline-offset: 2px;
+}
+input[type="number"]:focus,
+input[type="date"]:focus,
+select:focus,
+textarea:focus {
+  border-color: #00b275;
+}
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+.btn-submit {
+  background: #00b275;
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-weight: 700;
+  padding: 0.7rem 1rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+.btn-submit:hover {
+  background: #00995f;
+}
+
+/* Chart controls */
+.chart-controls {
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.chart-controls label {
+  font-weight: 600;
+  color: #374151;
+}
+#chart-period {
+  padding: 0.3rem 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  font-size: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .stats-cards {
+    grid-template-columns: 1fr 1fr;
+  }
+  main {
+    padding: 0 0.5rem;
+  }
+  header {
+    padding: 1rem;
+  }
+}
+
+.hidden { display: none; }
+
+.auth-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.auth-container {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  text-align: center;
+  width: 320px;
+}
+
+.auth-container h2 {
+  margin-bottom: 0.5rem;
+}
+
+.auth-container p {
+  margin-bottom: 1rem;
+  color: #6b7280;
+}
+
+.auth-container a {
+  color: #00b275;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-container a:hover {
+  text-decoration: underline;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.auth-section,
+#app-section {
+  transition: opacity 0.3s ease;
+}
+
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+}
+
+.recent-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.recent-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.delete-btn {
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.3rem 0.5rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.delete-btn:hover {
+  background: #dc2626;
+}
+
+.edit-modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.edit-modal.hidden {
+  display: none;
+}
+
+.edit-box {
+  background: white;
+  padding: 1.5rem;
+  width: 320px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+.edit-actions {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.edit-btn {
+  background: #fbbf24;
+  border: none;
+  padding: 0.3rem 0.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.edit-btn:hover {
+  background: #f59e0b;
+}
+
+.sort-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.sort-controls select {
+  border: 1px solid #d1d5db;
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+/* ------------------- DARK MODE ------------------- */
+body.dark-mode {
+  background: #111827;
+  color: #f3f4f6;
+}
+
+body.dark-mode header,
+body.dark-mode nav,
+body.dark-mode form,
+body.dark-mode .recent-earnings,
+body.dark-mode .card,
+body.dark-mode .edit-box {
+  background: #1f2937;
+  color: #f9fafb;
+  box-shadow: 0 1px 6px rgba(255,255,255,0.05);
+}
+
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode textarea {
+  background: #374151;
+  color: white;
+  border-color: #6b7280;
+}
+
+body.dark-mode .tab-btn.active {
+  color: #10b981 !important;
+  border-bottom-color: #10b981 !important;
+}
+
+body.dark-mode .delete-btn {
+  background: #b91c1c;
+}
+
+body.dark-mode .edit-btn {
+  background: #d97706;
+}
+
+/* Bottone Dark Mode fluttuante */
+.dark-toggle {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  border: none;
+  background: #00b275;
+  color: white;
+  font-size: 1.6rem;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+  z-index: 1000;
+  transition: 0.2s ease;
+}
+
+.dark-toggle:hover {
+  background: #00995f;
+  transform: scale(1.05);
+}
+
+body.dark-mode .dark-toggle {
+  background: #2563eb;
+}
+
+body.dark-mode .dark-toggle:hover {
+  background: #1e40af;
+}
+
+/* Transizione globale per cambio tema */
+* {
+  transition: background-color 220ms ease, color 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+}
+
+.dark-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background: #10b981;
+  color: white;
+  border: none;
+  font-size: 1.6rem;
+  box-shadow: 0 5px 12px rgba(0,0,0,0.25);
+  cursor: pointer;
+  z-index: 1000;
+}
+body.dark .dark-toggle {
+  background: #2563eb;
+}
+
+/* Mobile friendly */
+@media (max-width: 600px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+  }
+  .user-info {
+    margin-top: 0.5rem;
+  }
+  nav {
+    flex-direction: column;
+  }
+  nav .tab-btn {
+    width: 100%;
+    text-align: left;
+    padding: 0.7rem 1rem;
+  }
+  .stats-cards {
+    grid-template-columns: 1fr;
+  }
+  main {
+    padding: 0 1rem;
+  }
+  form {
+    width: 100%;
+    padding: 1rem;
+  }
+  .recent-earnings, .edit-box {
+    width: 100%;
+    padding: 1rem;
+  }
+  canvas {
+    width: 100% !important;
+    height: auto !important;
+  }
+}
